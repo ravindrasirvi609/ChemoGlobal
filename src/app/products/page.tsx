@@ -3,211 +3,15 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Link from "next/link";
-
-// Default product image
-const defaultProductImage = "/images/chemical-placeholder.png";
-
-// Mock product data
-const PRODUCTS = [
-  // Pharmaceutical Intermediates
-  {
-    id: 1,
-    name: "Methyl 4-aminobenzoate",
-    casNumber: "619-45-4",
-    category: "Pharmaceutical Intermediates",
-    description: "High-purity intermediate used in pharmaceutical synthesis",
-    purity: "99.5% min",
-    applications: ["API synthesis", "Research & Development"],
-    image: "",
-    isNew: false,
-    tags: ["Intermediate", "High Purity"],
-  },
-  {
-    id: 2,
-    name: "4-Chlorobenzaldehyde",
-    casNumber: "104-88-1",
-    category: "Pharmaceutical Intermediates",
-    description:
-      "Key intermediate for pharmaceutical and agrochemical synthesis",
-    purity: "98% min",
-    applications: ["Drug development", "Agrochemicals"],
-    image: "",
-    isNew: false,
-    tags: ["Intermediate", "Versatile"],
-  },
-  {
-    id: 13,
-    name: "2-Amino-5-chloropyridine",
-    casNumber: "1072-98-6",
-    category: "Pharmaceutical Intermediates",
-    description:
-      "High-purity pharmaceutical intermediate valued in organic synthesis and drug discovery",
-    purity: "99% min",
-    applications: ["API synthesis", "Drug discovery", "CNS drug candidates"],
-    image: "",
-    isNew: true,
-    tags: ["Intermediate", "High Purity"],
-  },
-  {
-    id: 3,
-    name: "2-Aminopyridine",
-    casNumber: "504-29-0",
-    category: "Pharmaceutical Intermediates",
-    description: "Used in the synthesis of various pharmaceutical compounds",
-    purity: "99% min",
-    applications: ["Pharmaceutical synthesis", "Research chemicals"],
-    image: "",
-    isNew: false,
-    tags: ["Intermediate"],
-  },
-  {
-    id: 4,
-    name: "1,3-Dicyanobenzene",
-    casNumber: "626-17-5",
-    category: "Pharmaceutical Intermediates",
-    description: "Important intermediate for API synthesis",
-    purity: "98% min",
-    applications: ["Medicinal chemistry", "Custom synthesis"],
-    image: "",
-    isNew: false,
-    tags: ["Intermediate", "Custom Synthesis"],
-  },
-
-  // Specialty Chemicals
-  {
-    id: 5,
-    name: "4-Methylbenzaldehyde",
-    casNumber: "104-87-0",
-    category: "Specialty Chemicals",
-    description: "Used in fragrance and flavor compositions",
-    purity: "99% min",
-    applications: ["Fragrances", "Flavor compounds", "Chemical synthesis"],
-    image: "",
-    isNew: false,
-    tags: ["Specialty", "Flavors"],
-  },
-  {
-    id: 6,
-    name: "Benzoic Acid",
-    casNumber: "65-85-0",
-    category: "Specialty Chemicals",
-    description: "Widely used in industrial applications and preservatives",
-    purity: "99.5% min",
-    applications: ["Preservatives", "Polymer additives", "Pharmaceuticals"],
-    image: "",
-    isNew: false,
-    tags: ["Specialty", "Industrial"],
-  },
-  {
-    id: 7,
-    name: "2-Ethylhexanol",
-    casNumber: "104-76-7",
-    category: "Specialty Chemicals",
-    description: "Versatile solvent and intermediate",
-    purity: "99% min",
-    applications: ["Plasticizers", "Coatings", "Extraction processes"],
-    image: "",
-    isNew: true,
-    tags: ["Specialty", "Solvent"],
-  },
-  {
-    id: 8,
-    name: "Benzophenone",
-    casNumber: "119-61-9",
-    category: "Specialty Chemicals",
-    description: "Used in UV curing applications and organic synthesis",
-    purity: "99% min",
-    applications: ["UV absorbers", "Photochemistry", "Organic synthesis"],
-    image: "",
-    isNew: false,
-    tags: ["Specialty", "UV Applications"],
-  },
-
-  // APIs
-  {
-    id: 9,
-    name: "Paracetamol",
-    casNumber: "103-90-2",
-    category: "APIs",
-    description: "Active pharmaceutical ingredient with analgesic properties",
-    purity: "99.5% min",
-    applications: ["Pain management", "Fever reduction"],
-    image: "",
-    isNew: false,
-    tags: ["API", "Analgesic"],
-  },
-  {
-    id: 10,
-    name: "Metformin HCl",
-    casNumber: "1115-70-4",
-    category: "APIs",
-    description: "Antidiabetic medication API",
-    purity: "99% min",
-    applications: ["Diabetes management", "Pharmaceutical formulations"],
-    image: "",
-    isNew: false,
-    tags: ["API", "Antidiabetic"],
-  },
-  {
-    id: 11,
-    name: "Atorvastatin Calcium",
-    casNumber: "134523-03-8",
-    category: "APIs",
-    description: "GMP-certified API for cholesterol management",
-    purity: "99% min",
-    applications: ["Cardiovascular health", "Pharmaceutical formulations"],
-    image: "",
-    isNew: false,
-    tags: ["API", "GMP", "Cardiovascular"],
-  },
-  {
-    id: 12,
-    name: "Omeprazole",
-    casNumber: "73590-58-6",
-    category: "APIs",
-    description: "API used in treatment of acid reflux and ulcers",
-    purity: "99.5% min",
-    applications: ["Gastric acid regulation", "Pharmaceutical formulations"],
-    image: "",
-    isNew: true,
-    tags: ["API", "Gastric"],
-  },
-];
-
-// Categories with icons
-const CATEGORIES = [
-  { name: "All Products", count: PRODUCTS.length, icon: "🧪" },
-  {
-    name: "Pharmaceutical Intermediates",
-    count: PRODUCTS.filter((p) => p.category === "Pharmaceutical Intermediates")
-      .length,
-    icon: "🧪",
-  },
-  {
-    name: "Specialty Chemicals",
-    count: PRODUCTS.filter((p) => p.category === "Specialty Chemicals").length,
-    icon: "⚗️",
-  },
-  {
-    name: "APIs",
-    count: PRODUCTS.filter((p) => p.category === "APIs").length,
-    icon: "💊",
-  },
-];
+import { PRODUCTS, CATEGORIES } from "../data/products";
+import ProductCard from "../components/ProductCard";
 
 export default function Products() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Products");
-  const [quoteItems, setQuoteItems] = useState<Array<(typeof PRODUCTS)[0]>>([]);
 
   // Handle adding product to quote request
   const handleAddToQuote = (product: (typeof PRODUCTS)[0]) => {
-    setQuoteItems((prev) => {
-      if (!prev.find((item) => item.id === product.id)) {
-        return [...prev, product];
-      }
-      return prev;
-    });
     // Could show a notification here
     console.log(`Added ${product.name} to quote request`);
   };
@@ -338,80 +142,19 @@ export default function Products() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProducts.map((product) => (
-                  <div
+                  <ProductCard
                     key={product.id}
-                    className="bg-white/40 backdrop-filter backdrop-blur-lg border border-white/20 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group"
-                  >
-                    <div className="relative bg-gradient-to-br from-blue-50/50 to-blue-100/50 backdrop-filter backdrop-blur-sm h-48 flex items-center justify-center p-6">
-                      <div className="absolute inset-0 bg-blue-500/10 backdrop-filter backdrop-blur-[2px]"></div>
-                      <img
-                        src={product.image || defaultProductImage}
-                        alt={product.name}
-                        className="max-h-full max-w-full object-contain z-10 transition-transform duration-300 group-hover:scale-105"
-                      />
-                      {product.isNew && (
-                        <span className="absolute top-2 right-2 bg-green-500/80 backdrop-filter backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-full shadow-md">
-                          NEW
-                        </span>
-                      )}
-                    </div>
-                    <div className="p-5">
-                      <h3 className="text-lg font-semibold mb-2 text-gray-800">
-                        {product.name}
-                      </h3>
-                      <p className="text-gray-500 text-sm mb-3">
-                        {product.casNumber}
-                      </p>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {product.tags &&
-                          product.tags.map((tag, index) => (
-                            <span
-                              key={index}
-                              className="bg-blue-100/50 backdrop-filter backdrop-blur-sm text-blue-800 text-xs px-2 py-1 rounded-full"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <Link
-                          href={`/products/${product.id}`}
-                          className="bg-blue-600/90 backdrop-filter backdrop-blur-sm hover:bg-blue-700/90 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md"
-                        >
-                          View Details
-                        </Link>
-                        <button
-                          onClick={() => handleAddToQuote(product)}
-                          className="ml-2 text-blue-600 hover:text-blue-800 p-2 rounded-full hover:bg-blue-50/60 hover:backdrop-blur-sm transition-all"
-                          title="Add to Quote"
-                        >
-                          <span className="sr-only">Add to Quote</span>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            className="w-5 h-5"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M12 4v16m8-8H4"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                    product={product}
+                    onAddToQuote={handleAddToQuote}
+                  />
                 ))}
               </div>
             )}
 
             <div className="mt-10 text-center">
               <p className="text-gray-600 mb-4">
-                Don't see what you're looking for? We offer custom synthesis
-                services.
+                Don&apos;t see what you&apos;re looking for? We offer custom
+                synthesis services.
               </p>
               <Link
                 href="/contact"
@@ -503,7 +246,7 @@ export default function Products() {
             </div>
           </div>
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            &copy; {new Date().getFullYear()} ChemoGlobal. All rights reserved.
+            &copy; 2025 ChemoGlobal. All rights reserved.
           </div>
         </div>
       </footer>

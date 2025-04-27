@@ -4,18 +4,10 @@ import Navbar from "./components/Navbar";
 import Link from "next/link";
 import Footer from "./components/Footer";
 import Image from "next/image";
+import { featuredProducts, Product } from "./data/products";
+import ProductCard from "./components/ProductCard";
 
 // Define types
-type Product = {
-  id: string;
-  name: string;
-  casNumber: string;
-  category: string;
-  image: string;
-  isNew?: boolean;
-  tags?: string[];
-};
-
 type Feature = {
   icon: React.ReactNode;
   title: string;
@@ -31,43 +23,12 @@ type Testimonial = {
 };
 
 // Default product image
-const defaultProductImage = "/images/default-product.png";
-
 export default function Home() {
   // Handle adding product to quote
   const handleAddToQuote = (product: Product) => {
     // Implementation will go here
     console.log("Added to quote:", product);
   };
-
-  // Featured products data
-  const featuredProducts: Product[] = [
-    {
-      id: "p1",
-      name: "2-Amino-5-chloropyridine",
-      casNumber: "1072-98-6",
-      category: "Heterocyclic Compounds",
-      image: "/images/products/2-amino-5-chloropyridine.png",
-      isNew: true,
-      tags: ["API Intermediate", "Heterocyclic"],
-    },
-    {
-      id: "p2",
-      name: "4-Fluorobenzaldehyde",
-      casNumber: "459-57-4",
-      category: "Fluorine Compounds",
-      image: "/images/products/4-fluorobenzaldehyde.png",
-      tags: ["Building Block", "Fluorinated"],
-    },
-    {
-      id: "p3",
-      name: "3-Bromophenylacetic acid",
-      casNumber: "586-79-0",
-      category: "Carboxylic Acids",
-      image: "/images/products/3-bromophenylacetic-acid.png",
-      tags: ["Carboxylic Acid", "Halogenated"],
-    },
-  ];
 
   // Features data
   const features: Feature[] = [
@@ -222,20 +183,20 @@ export default function Home() {
                 description:
                   "High-purity compounds for pharmaceutical manufacturing",
                 icon: "🧪",
-                link: "/products/pharmaceutical-intermediates",
+                link: "/products?category=Pharmaceutical%20Intermediates",
               },
               {
                 title: "Specialty Chemicals",
                 description:
                   "Custom synthesized chemicals for specific applications",
                 icon: "⚗️",
-                link: "/products/specialty-chemicals",
+                link: "/products?category=Specialty%20Chemicals",
               },
               {
                 title: "Active Pharmaceutical Ingredients",
                 description: "GMP-certified APIs for pharmaceutical production",
                 icon: "💊",
-                link: "/products/apis",
+                link: "/products?category=APIs",
               },
             ].map((category, index) => (
               <div
@@ -310,51 +271,11 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featuredProducts.map((product, index) => (
-              <div
+              <ProductCard
                 key={index}
-                className="bg-[#F3F8FA] rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-[#3E64FF] mb-3">
-                    {product.name}
-                  </h3>
-                  <p className="text-[#64748B] mb-4">{product.casNumber}</p>
-                  <div className="flex items-center mb-4">
-                    <span className="bg-[#7ED957] text-white text-xs px-2 py-1 rounded-full mr-2">
-                      {product.isNew && "NEW"}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <Link
-                      href={`/products/${product.id}`}
-                      className="text-[#536DFE] hover:text-[#3E64FF] font-medium"
-                    >
-                      View Details →
-                    </Link>
-                    <button
-                      onClick={() => handleAddToQuote(product)}
-                      className="ml-2 text-blue-600 hover:text-blue-800 p-2 rounded-full hover:bg-blue-50/60 hover:backdrop-blur-sm transition-all"
-                      title="Add to Quote"
-                    >
-                      <span className="sr-only">Add to Quote</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        className="w-5 h-5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
+                product={product}
+                onAddToQuote={handleAddToQuote}
+              />
             ))}
           </div>
           <div className="text-center mt-12">
@@ -420,10 +341,12 @@ export default function Home() {
                 className="bg-white/40 backdrop-filter backdrop-blur-lg rounded-xl p-8 shadow-lg border border-white/20 transition-all duration-300 hover:shadow-xl"
               >
                 <div className="flex items-center mb-4">
-                  <img
+                  <Image
                     src={testimonial.avatar}
                     alt={testimonial.name}
                     className="w-12 h-12 rounded-full object-cover"
+                    width={48}
+                    height={48}
                   />
                   <div className="ml-4">
                     <h4 className="font-semibold text-gray-800">
@@ -448,7 +371,7 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-gray-600 italic mb-4">
-                  "{testimonial.quote}"
+                  &quot;{testimonial.quote}&quot;
                 </p>
               </div>
             ))}

@@ -202,7 +202,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="mt-8 text-center">
           <p className="text-[#64748B] text-sm">
-            &copy; {new Date().getFullYear()} ChemoGlobal. All rights reserved.
+            &copy; 2025 ChemoGlobal. All rights reserved.
           </p>
         </div>
       </div>
