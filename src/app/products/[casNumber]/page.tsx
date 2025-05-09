@@ -32,7 +32,6 @@ export default function ProductDetail() {
   if (!product) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Navbar />
         <div className="container mx-auto px-4 py-16 flex-grow">
           <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
             <div className="text-5xl mb-4">⚠️</div>
@@ -61,7 +60,6 @@ export default function ProductDetail() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
 
       <main className="flex-grow">
         {/* Product Header */}

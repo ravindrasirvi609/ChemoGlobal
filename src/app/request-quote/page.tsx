@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
-import Navbar from "../components/Navbar";
 import Link from "next/link";
 
 export default function RequestQuote() {
@@ -74,8 +73,6 @@ export default function RequestQuote() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-
       {/* Hero Section */}
       <div className="bg-blue-600 text-white py-12">
         <div className="container mx-auto px-4 text-center">
@@ -410,7 +407,7 @@ export default function RequestQuote() {
                   Our sales team will review your request and prepare a quote.
                 </li>
                 <li>
-                  You'll receive an email with pricing and availability
+                  You&apos;ll receive an email with pricing and availability
                   information within 24-48 business hours.
                 </li>
                 <li>
@@ -418,7 +415,7 @@ export default function RequestQuote() {
                   contact you.
                 </li>
                 <li>
-                  Once you approve the quote, we'll process your order and
+                  Once you approve the quote, we&apos;ll process your order and
                   arrange for shipping.
                 </li>
               </ol>
@@ -428,10 +425,10 @@ export default function RequestQuote() {
                   For urgent quotes or large volume orders, please contact our
                   sales team directly at{" "}
                   <a
-                    href="tel:+15551234567"
+                    href="tel:+918107199052"
                     className="text-blue-600 hover:underline"
                   >
-                    +1 (555) 123-4567
+                    +91 8107199052
                   </a>
                   .
                 </p>
@@ -440,90 +437,6 @@ export default function RequestQuote() {
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-12 mt-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">ChemoGlobal</h3>
-              <p className="text-gray-400">
-                Your trusted partner for high-quality chemical products and
-                solutions.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="/products"
-                    className="text-gray-400 hover:text-white"
-                  >
-                    Products
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/industries"
-                    className="text-gray-400 hover:text-white"
-                  >
-                    Industries
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/certifications"
-                    className="text-gray-400 hover:text-white"
-                  >
-                    Certifications
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blog" className="text-gray-400 hover:text-white">
-                    Resources
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Contact</h4>
-              <ul className="space-y-2">
-                <li className="flex items-center text-gray-400">
-                  <span className="mr-2">📧</span> info@chemoglobal.com
-                </li>
-                <li className="flex items-center text-gray-400">
-                  <span className="mr-2">📱</span> +1 (555) 123-4567
-                </li>
-                <li className="flex items-center text-gray-400">
-                  <span className="mr-2">📍</span> 123 Chemical Way, Industry
-                  Park
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Certifications</h4>
-              <div className="flex flex-wrap gap-3">
-                <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded">
-                  ISO 9001
-                </span>
-                <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded">
-                  GMP
-                </span>
-                <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded">
-                  FDA
-                </span>
-                <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded">
-                  ISO 14001
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            &copy; {new Date().getFullYear()} ChemoGlobal. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

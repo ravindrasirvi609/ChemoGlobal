@@ -1,8 +1,6 @@
 "use client";
 
-import Navbar from "./components/Navbar";
 import Link from "next/link";
-import Footer from "./components/Footer";
 import Image from "next/image";
 import { featuredProducts, Product } from "./data/products";
 import ProductCard from "./components/ProductCard";
@@ -127,8 +125,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-
       {/* Hero Section */}
       <section className="bg-[#F3F8FA] py-20">
         <div className="container mx-auto px-4">
@@ -431,8 +427,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }

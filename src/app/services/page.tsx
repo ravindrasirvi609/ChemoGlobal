@@ -1,8 +1,5 @@
 "use client";
 
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import Image from "next/image";
 import Link from "next/link";
 
 type Service = {
@@ -140,8 +137,6 @@ export default function Services() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-
       {/* Hero Section */}
       <section className="bg-[#F3F8FA] py-20">
         <div className="container mx-auto px-4">
@@ -297,8 +292,6 @@ export default function Services() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }
