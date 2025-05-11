@@ -17,49 +17,104 @@
   --cta-foreground: #ffffff;
 }
 
+/* Global styles */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: var(--background);
+  background-color: #ffffff;
   color: var(--foreground);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
 }
 
 /* Component styles */
 .btn-primary {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  transition: background-color 0.2s;
+  @apply bg-gradient-to-r from-[#3E64FF] to-[#536DFE] text-white px-6 py-3 rounded-full font-medium transition-all shadow-md hover:shadow-lg hover:from-[#3E64FF] hover:to-[#3E64FF] transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center;
 }
 
-.btn-primary:hover {
-  background-color: #3051cc;
-}
-
-.btn-cta {
-  background-color: var(--cta);
-  color: var(--cta-foreground);
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  transition: opacity 0.2s;
-}
-
-.btn-cta:hover {
-  opacity: 0.9;
+.btn-secondary {
+  @apply border-2 border-[#536DFE] text-[#536DFE] hover:bg-[#536DFE]/10 px-6 py-3 rounded-full font-medium transition-colors flex items-center justify-center;
 }
 
 .btn-accent {
-  background-color: var(--accent);
-  color: var(--accent-foreground);
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  transition: opacity 0.2s;
+  @apply bg-gradient-to-r from-[#7ED957] to-[#5DC540] text-white px-6 py-3 rounded-full font-medium transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center;
 }
 
-.btn-accent:hover {
-  opacity: 0.9;
+.btn-outline {
+  @apply border-2 border-white text-white hover:bg-white/10 px-6 py-3 rounded-full font-medium transition-colors flex items-center justify-center;
 }
 
-.text-secondary {
-  color: #64748B;
+.text-gradient {
+  @apply bg-gradient-to-r from-[#3E64FF] to-[#536DFE] text-transparent bg-clip-text;
+}
+
+.text-gradient-alt {
+  @apply bg-gradient-to-r from-[#536DFE] to-[#7ED957] text-transparent bg-clip-text;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.5s ease-out forwards;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white/80 backdrop-filter backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300;
+}
+
+.card-hover {
+  @apply hover:-translate-y-1;
+}
+
+/* Section styling */
+.section-heading {
+  @apply text-3xl font-bold mb-4;
+}
+
+.section-subheading {
+  @apply text-gray-600 mb-12 max-w-3xl mx-auto;
+}
+
+/* Utilities */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Glass effect */
+.glass-effect {
+  @apply backdrop-filter backdrop-blur-md bg-white/60 border border-white/50;
+}
+
+/* Background patterns */
+.bg-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233E64FF' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }

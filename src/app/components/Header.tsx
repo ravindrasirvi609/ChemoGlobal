@@ -1,60 +1,62 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 10;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrolled]);
 
   return (
-    <nav className="bg-[#F3F8FA] shadow-sm sticky top-0 z-50">
+    <nav
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-white/90 backdrop-blur-md shadow-md" : "bg-transparent"
+      }`}
+    >
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold text-[#3E64FF]">
-                Chemo<span className="text-[#7ED957]">Global</span>
+              <div className="relative h-10 w-10 mr-2">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#3E64FF] to-[#7ED957] rounded-lg transform -rotate-6"></div>
+                <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg">
+                  CG
+                </div>
+              </div>
+              <span className="text-2xl font-bold">
+                <span className="bg-gradient-to-r from-[#3E64FF] to-[#7ED957] text-transparent bg-clip-text">
+                  ChemoGlobal
+                </span>
               </span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4">
-              <Link
-                href="/"
-                className="text-[#64748B] hover:text-[#3E64FF] px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Home
-              </Link>
-              <Link
-                href="/about"
-                className="text-[#64748B] hover:text-[#3E64FF] px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                About Us
-              </Link>
-              <Link
-                href="/products"
-                className="text-[#64748B] hover:text-[#3E64FF] px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Products
-              </Link>
-              <Link
-                href="/services"
-                className="text-[#64748B] hover:text-[#3E64FF] px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Services
-              </Link>
-              <Link
-                href="/contact"
-                className="text-[#64748B] hover:text-[#3E64FF] px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Contact
-              </Link>
+            <div className="ml-10 flex items-center space-x-1">
+              <NavLink href="/">Home</NavLink>
+              <NavLink href="/about">About Us</NavLink>
+              <NavLink href="/products">Products</NavLink>
+              <NavLink href="/services">Services</NavLink>
+              <NavLink href="/contact">Contact</NavLink>
               <Link
                 href="/request-quote"
-                className="bg-[#536DFE] hover:bg-[#3E64FF] text-white px-4 py-2 rounded-md text-sm font-medium ml-4 transition-colors"
+                className="bg-gradient-to-r from-[#3E64FF] to-[#536DFE] hover:from-[#3E64FF] hover:to-[#3E64FF] text-white px-6 py-2.5 rounded-full text-sm font-medium ml-4 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0"
               >
                 Request Quote
               </Link>
@@ -65,7 +67,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-[#64748B] hover:text-[#3E64FF] hover:bg-[#F3F8FA] focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-full text-[#64748B] hover:text-[#3E64FF] hover:bg-blue-50/80 focus:outline-none transition-colors"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
@@ -109,46 +111,32 @@ const Navbar = () => {
 
       {/* Mobile menu, show/hide based on menu state */}
       {isMenuOpen && (
-        <div className="md:hidden bg-[#F3F8FA] border-t border-gray-200">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link
-              href="/"
-              className="text-[#64748B] hover:text-[#3E64FF] hover:bg-[#F3F8FA]/70 block px-3 py-2 rounded-md text-base font-medium transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
+        <div className="md:hidden bg-white/95 backdrop-blur-md shadow-lg absolute w-full border-t border-gray-100 animate-fadeIn">
+          <div className="px-4 pt-2 pb-3 space-y-1">
+            <MobileNavLink href="/" onClick={() => setIsMenuOpen(false)}>
               Home
-            </Link>
-            <Link
-              href="/about"
-              className="text-[#64748B] hover:text-[#3E64FF] hover:bg-[#F3F8FA]/70 block px-3 py-2 rounded-md text-base font-medium transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            </MobileNavLink>
+            <MobileNavLink href="/about" onClick={() => setIsMenuOpen(false)}>
               About Us
-            </Link>
-            <Link
+            </MobileNavLink>
+            <MobileNavLink
               href="/products"
-              className="text-[#64748B] hover:text-[#3E64FF] hover:bg-[#F3F8FA]/70 block px-3 py-2 rounded-md text-base font-medium transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Products
-            </Link>
-            <Link
+            </MobileNavLink>
+            <MobileNavLink
               href="/services"
-              className="text-[#64748B] hover:text-[#3E64FF] hover:bg-[#F3F8FA]/70 block px-3 py-2 rounded-md text-base font-medium transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Services
-            </Link>
-            <Link
-              href="/contact"
-              className="text-[#64748B] hover:text-[#3E64FF] hover:bg-[#F3F8FA]/70 block px-3 py-2 rounded-md text-base font-medium transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            </MobileNavLink>
+            <MobileNavLink href="/contact" onClick={() => setIsMenuOpen(false)}>
               Contact
-            </Link>
+            </MobileNavLink>
             <Link
               href="/request-quote"
-              className="bg-[#536DFE] hover:bg-[#3E64FF] text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
+              className="bg-gradient-to-r from-[#3E64FF] to-[#536DFE] text-white block px-4 py-3 rounded-xl text-base font-medium transition-all mt-4 text-center shadow-md"
               onClick={() => setIsMenuOpen(false)}
             >
               Request Quote
@@ -159,5 +147,55 @@ const Navbar = () => {
     </nav>
   );
 };
+
+// NavLink component for desktop
+const NavLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => (
+  <Link
+    href={href}
+    className="relative text-[#64748B] hover:text-[#3E64FF] px-3 py-2 rounded-md text-sm font-medium transition-colors group"
+  >
+    {children}
+    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#3E64FF] to-[#7ED957] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+  </Link>
+);
+
+// NavLink component for mobile
+const MobileNavLink = ({
+  href,
+  onClick,
+  children,
+}: {
+  href: string;
+  onClick: () => void;
+  children: React.ReactNode;
+}) => (
+  <Link
+    href={href}
+    className="text-[#64748B] hover:text-[#3E64FF] hover:bg-blue-50/50 block px-4 py-3 rounded-xl text-base font-medium transition-colors flex items-center"
+    onClick={onClick}
+  >
+    {children}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-4 w-4 ml-auto"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M9 5l7 7-7 7"
+      />
+    </svg>
+  </Link>
+);
 
 export default Navbar;
