@@ -527,11 +527,14 @@ export default function Home() {
                 className="bg-white backdrop-filter backdrop-blur-sm p-8 rounded-2xl border border-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="flex items-center mb-6">
-                  <div className="relative w-12 h-12 mr-4">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#3E64FF] to-[#536DFE] rounded-full opacity-70"></div>
-                    <div className="absolute inset-0.5 bg-white rounded-full flex items-center justify-center text-lg font-bold text-[#3E64FF]">
-                      {testimonial.name.charAt(0)}
-                    </div>
+                  <div className="relative w-12 h-12 mr-4 rounded-full overflow-hidden">
+                    <Image
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      width={48}
+                      height={48}
+                      className="object-cover"
+                    />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-800">
@@ -764,37 +767,37 @@ export default function Home() {
                 title: "Pharmaceutical",
                 description:
                   "High-purity intermediates and building blocks for API synthesis and drug discovery research.",
-                image: "/images/pharma.jpg",
+                image: "/images/industry/pharma.jpg",
               },
               {
                 title: "Agrochemical",
                 description:
                   "Specialized intermediates for the development of crop protection and enhancement products.",
-                image: "/images/agro.jpg",
+                image: "/images/industry/agro.jpg",
               },
               {
                 title: "Electronics",
                 description:
                   "Ultra-pure materials for semiconductor manufacturing and electronic components.",
-                image: "/images/electronics.jpg",
+                image: "/images/industry/electronics.jpg",
               },
               {
                 title: "Materials Science",
                 description:
                   "Advanced compounds for polymer development and material enhancement applications.",
-                image: "/images/materials.jpg",
+                image: "/images/industry/materials.jpg",
               },
               {
                 title: "Biotechnology",
                 description:
                   "Reagents and building blocks for biomolecule research and development.",
-                image: "/images/biotech.jpg",
+                image: "/images/industry/biotech.jpg",
               },
               {
                 title: "Cosmetics",
                 description:
                   "Specialty ingredients for personal care and cosmetic formulations.",
-                image: "/images/cosmetics.jpg",
+                image: "/images/industry/cosmetics.jpg",
               },
             ].map((industry, idx) => (
               <div
@@ -803,7 +806,15 @@ export default function Home() {
               >
                 <div className="h-48 bg-gray-100 relative overflow-hidden">
                   {industry.image && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+                    <>
+                      <Image
+                        src={industry.image}
+                        alt={`${industry.title} industry`}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+                    </>
                   )}
                   <div className="absolute bottom-0 left-0 p-4 z-20">
                     <h3 className="text-xl font-bold text-white">
