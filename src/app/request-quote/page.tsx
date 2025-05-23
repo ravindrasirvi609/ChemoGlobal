@@ -37,7 +37,7 @@ export default function RequestQuote() {
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!formData.termsAccepted) {
@@ -45,31 +45,49 @@ export default function RequestQuote() {
       return;
     }
 
-    // In a real application, you would send this data to your backend
-    console.log("Quote request submitted:", formData);
-    alert(
-      "Thank you for your quote request. Our team will process it and get back to you shortly!"
-    );
+    try {
+      const response = await fetch("/api/submit-form", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    // Reset form (except for any pre-filled product)
-    const product = formData.productName;
-    const cas = formData.casNumber;
-    setFormData({
-      name: "",
-      company: "",
-      email: "",
-      phone: "",
-      address: "",
-      city: "",
-      country: "",
-      productName: product, // Keep the product name
-      casNumber: cas, // Keep the CAS number
-      quantity: "",
-      purity: "",
-      targetDate: "",
-      requirements: "",
-      termsAccepted: false,
-    });
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log("Quote request submission successful:", result);
+        alert(
+          "Thank you for your quote request. Our team will process it and get back to you shortly!"
+        );
+
+        // Reset form (except for any pre-filled product)
+        const product = formData.productName;
+        const cas = formData.casNumber;
+        setFormData({
+          name: "",
+          company: "",
+          email: "",
+          phone: "",
+          address: "",
+          city: "",
+          country: "",
+          productName: product, // Keep the product name
+          casNumber: cas, // Keep the CAS number
+          quantity: "",
+          purity: "",
+          targetDate: "",
+          requirements: "",
+          termsAccepted: false,
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting quote request:", error);
+      alert(
+        "An error occurred while submitting your quote request. Please try again later."
+      );
+    }
   };
 
   return (

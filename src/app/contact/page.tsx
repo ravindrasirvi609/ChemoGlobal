@@ -26,22 +26,39 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // In a real application, you would send this data to your backend or a CRM
-    console.log("Form submitted:", formData);
-    alert("Thank you for your inquiry. Our team will contact you shortly!");
-    // Reset form
-    setFormData({
-      name: "",
-      company: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: "",
-      requestType: "general",
-      preferredContact: "email",
-    });
+
+    try {
+      const response = await fetch("/api/submit-form", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log("Form submission successful:", result);
+        alert("Thank you for your inquiry. Our team will contact you shortly!");
+        // Reset form
+        setFormData({
+          name: "",
+          company: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+          requestType: "general",
+          preferredContact: "email",
+        });
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      alert("An error occurred. Please try again later.");
+    }
   };
 
   return (
