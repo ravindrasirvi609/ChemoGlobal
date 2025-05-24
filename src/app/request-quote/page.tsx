@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function RequestQuote() {
+// Create a separate component for the form to use useSearchParams
+function QuoteForm() {
   const searchParams = useSearchParams();
 
   const [formData, setFormData] = useState({
@@ -91,6 +92,443 @@ export default function RequestQuote() {
   };
 
   return (
+    <form className="space-y-8" onSubmit={handleSubmit}>
+      {/* Contact Information Section */}
+      <div>
+        <div className="flex items-center mb-6">
+          <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-3 text-blue-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-semibold text-gray-800">
+            Contact Information
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="group">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              Your Name*
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full pl-10 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="group">
+            <label
+              htmlFor="company"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              Company Name*
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                  />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
+                className="w-full pl-10 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+                placeholder="Your Company, Inc."
+                required
+              />
+            </div>
+          </div>
+
+          <div className="group">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              Email Address*
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full pl-10 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+                placeholder="john@example.com"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="group">
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              Phone Number*
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full pl-10 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+                placeholder="+1 234 567 8900"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="group md:col-span-1">
+            <label
+              htmlFor="address"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              Address
+            </label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+              placeholder="123 Business St."
+            />
+          </div>
+
+          <div className="group">
+            <label
+              htmlFor="city"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              City
+            </label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+              placeholder="Boston"
+            />
+          </div>
+
+          <div className="group">
+            <label
+              htmlFor="country"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              Country*
+            </label>
+            <input
+              type="text"
+              id="country"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+              placeholder="United States"
+              required
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Product Information Section */}
+      <div className="pt-8 border-t border-gray-200">
+        <div className="flex items-center mb-6">
+          <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center mr-3 text-green-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+              />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-semibold text-gray-800">
+            Product Information
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="group">
+            <label
+              htmlFor="productName"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              Product Name*
+            </label>
+            <input
+              type="text"
+              id="productName"
+              name="productName"
+              value={formData.productName}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+              placeholder="Product name"
+              required
+            />
+          </div>
+
+          <div className="group">
+            <label
+              htmlFor="casNumber"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              CAS Number
+            </label>
+            <input
+              type="text"
+              id="casNumber"
+              name="casNumber"
+              value={formData.casNumber}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+              placeholder="e.g. 123-45-6"
+            />
+          </div>
+
+          <div className="group">
+            <label
+              htmlFor="quantity"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              Quantity Needed*
+            </label>
+            <input
+              type="text"
+              id="quantity"
+              name="quantity"
+              value={formData.quantity}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+              placeholder="e.g. 100 kg"
+              required
+            />
+          </div>
+
+          <div className="group">
+            <label
+              htmlFor="purity"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              Required Purity
+            </label>
+            <input
+              type="text"
+              id="purity"
+              name="purity"
+              value={formData.purity}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+              placeholder="e.g. >99%"
+            />
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <div className="group">
+            <label
+              htmlFor="targetDate"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              Target Date
+            </label>
+            <input
+              type="date"
+              id="targetDate"
+              name="targetDate"
+              value={formData.targetDate}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+            />
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <div className="group">
+            <label
+              htmlFor="requirements"
+              className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
+            >
+              Additional Requirements or Comments
+            </label>
+            <textarea
+              id="requirements"
+              name="requirements"
+              rows={4}
+              value={formData.requirements}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
+              placeholder="Please share any specific requirements or additional information..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      {/* Terms and Submit Section */}
+      <div className="pt-6 border-t border-gray-200">
+        <div className="flex items-start mb-6">
+          <div className="flex items-center h-5">
+            <input
+              id="termsAccepted"
+              name="termsAccepted"
+              type="checkbox"
+              checked={formData.termsAccepted}
+              onChange={handleChange}
+              className="focus:ring-blue-500 h-5 w-5 text-blue-600 border-gray-300 rounded-md"
+              required
+            />
+          </div>
+          <div className="ml-3 text-sm">
+            <label
+              htmlFor="termsAccepted"
+              className="font-medium text-gray-700"
+            >
+              I agree to the{" "}
+              <Link href="/terms" className="text-blue-600 hover:text-blue-800">
+                Terms and Conditions
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="/privacy"
+                className="text-blue-600 hover:text-blue-800"
+              >
+                Privacy Policy
+              </Link>
+            </label>
+          </div>
+        </div>
+
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            className="bg-gradient-to-r from-[#3E64FF] to-[#536DFE] text-white px-8 py-3.5 rounded-xl font-medium hover:from-[#3E64FF] hover:to-[#3E64FF] transition-all hover:-translate-y-1 duration-300 shadow-md hover:shadow-xl flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            <span>Submit Quote Request</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 ml-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 5l7 7-7 7M5 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </form>
+  );
+}
+
+// Main page component
+export default function RequestQuote() {
+  return (
     <div className="min-h-screen flex flex-col">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-16">
@@ -174,440 +612,9 @@ export default function RequestQuote() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white/80 backdrop-filter backdrop-blur-lg shadow-xl rounded-2xl p-8 border border-white/50">
-              <form className="space-y-8" onSubmit={handleSubmit}>
-                {/* Contact Information Section */}
-                <div>
-                  <div className="flex items-center mb-6">
-                    <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-3 text-blue-600">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        />
-                      </svg>
-                    </div>
-                    <h2 className="text-2xl font-semibold text-gray-800">
-                      Contact Information
-                    </h2>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="group">
-                      <label
-                        htmlFor="name"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        Your Name*
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                            />
-                          </svg>
-                        </div>
-                        <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          className="w-full pl-10 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                          placeholder="John Doe"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <div className="group">
-                      <label
-                        htmlFor="company"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        Company Name*
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                            />
-                          </svg>
-                        </div>
-                        <input
-                          type="text"
-                          id="company"
-                          name="company"
-                          value={formData.company}
-                          onChange={handleChange}
-                          className="w-full pl-10 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                          placeholder="Your Company, Inc."
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <div className="group">
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        Email Address*
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                            />
-                          </svg>
-                        </div>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          className="w-full pl-10 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                          placeholder="john@example.com"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <div className="group">
-                      <label
-                        htmlFor="phone"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        Phone Number*
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                            />
-                          </svg>
-                        </div>
-                        <input
-                          type="tel"
-                          id="phone"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className="w-full pl-10 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                          placeholder="+1 234 567 8900"
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="group md:col-span-1">
-                      <label
-                        htmlFor="address"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        Address
-                      </label>
-                      <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                        placeholder="123 Business St."
-                      />
-                    </div>
-
-                    <div className="group">
-                      <label
-                        htmlFor="city"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        City
-                      </label>
-                      <input
-                        type="text"
-                        id="city"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                        placeholder="Boston"
-                      />
-                    </div>
-
-                    <div className="group">
-                      <label
-                        htmlFor="country"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        Country*
-                      </label>
-                      <input
-                        type="text"
-                        id="country"
-                        name="country"
-                        value={formData.country}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                        placeholder="United States"
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Product Information Section */}
-                <div className="pt-8 border-t border-gray-200">
-                  <div className="flex items-center mb-6">
-                    <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center mr-3 text-green-600">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                        />
-                      </svg>
-                    </div>
-                    <h2 className="text-2xl font-semibold text-gray-800">
-                      Product Information
-                    </h2>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="group">
-                      <label
-                        htmlFor="productName"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        Product Name*
-                      </label>
-                      <input
-                        type="text"
-                        id="productName"
-                        name="productName"
-                        value={formData.productName}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                        placeholder="Product name"
-                        required
-                      />
-                    </div>
-
-                    <div className="group">
-                      <label
-                        htmlFor="casNumber"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        CAS Number
-                      </label>
-                      <input
-                        type="text"
-                        id="casNumber"
-                        name="casNumber"
-                        value={formData.casNumber}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                        placeholder="e.g. 123-45-6"
-                      />
-                    </div>
-
-                    <div className="group">
-                      <label
-                        htmlFor="quantity"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        Quantity Needed*
-                      </label>
-                      <input
-                        type="text"
-                        id="quantity"
-                        name="quantity"
-                        value={formData.quantity}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                        placeholder="e.g. 100 kg"
-                        required
-                      />
-                    </div>
-
-                    <div className="group">
-                      <label
-                        htmlFor="purity"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        Required Purity
-                      </label>
-                      <input
-                        type="text"
-                        id="purity"
-                        name="purity"
-                        value={formData.purity}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                        placeholder="e.g. >99%"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mt-6">
-                    <div className="group">
-                      <label
-                        htmlFor="targetDate"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        Target Date
-                      </label>
-                      <input
-                        type="date"
-                        id="targetDate"
-                        name="targetDate"
-                        value={formData.targetDate}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mt-6">
-                    <div className="group">
-                      <label
-                        htmlFor="requirements"
-                        className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-blue-600 transition-colors"
-                      >
-                        Additional Requirements or Comments
-                      </label>
-                      <textarea
-                        id="requirements"
-                        name="requirements"
-                        rows={4}
-                        value={formData.requirements}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white/70 backdrop-filter backdrop-blur-sm"
-                        placeholder="Please share any specific requirements or additional information..."
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Terms and Submit Section */}
-                <div className="pt-6 border-t border-gray-200">
-                  <div className="flex items-start mb-6">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="termsAccepted"
-                        name="termsAccepted"
-                        type="checkbox"
-                        checked={formData.termsAccepted}
-                        onChange={handleChange}
-                        className="focus:ring-blue-500 h-5 w-5 text-blue-600 border-gray-300 rounded-md"
-                        required
-                      />
-                    </div>
-                    <div className="ml-3 text-sm">
-                      <label
-                        htmlFor="termsAccepted"
-                        className="font-medium text-gray-700"
-                      >
-                        I agree to the{" "}
-                        <Link
-                          href="/terms"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          Terms and Conditions
-                        </Link>{" "}
-                        and{" "}
-                        <Link
-                          href="/privacy"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          Privacy Policy
-                        </Link>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-end">
-                    <button
-                      type="submit"
-                      className="bg-gradient-to-r from-[#3E64FF] to-[#536DFE] text-white px-8 py-3.5 rounded-xl font-medium hover:from-[#3E64FF] hover:to-[#3E64FF] transition-all hover:-translate-y-1 duration-300 shadow-md hover:shadow-xl flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    >
-                      <span>Submit Quote Request</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 ml-2"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13 5l7 7-7 7M5 5l7 7-7 7"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </form>
+              <Suspense fallback={<div>Loading form...</div>}>
+                <QuoteForm />
+              </Suspense>
             </div>
 
             {/* Information Box */}

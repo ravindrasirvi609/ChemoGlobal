@@ -1,7 +1,16 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Check if the API key exists
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+if (!RESEND_API_KEY) {
+  console.warn(
+    "RESEND_API_KEY is not configured. Email functionality will not work."
+  );
+}
+
+// Initialize Resend with the API key if available
+const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 // Configure recipient and sender emails using environment variables
 const CONTACT_RECIPIENT_EMAIL = process.env.CONTACT_RECIPIENT_EMAIL;
@@ -30,6 +39,18 @@ export async function POST(request: Request) {
           {
             message:
               "Server configuration error: Contact recipient email not set.",
+          },
+          { status: 500 }
+        );
+      }
+
+      // Check if Resend has been initialized
+      if (!resend) {
+        console.error("Resend API key is missing. Cannot send email.");
+        return NextResponse.json(
+          {
+            message:
+              "Server configuration error: Email service not configured.",
           },
           { status: 500 }
         );
@@ -75,6 +96,18 @@ Message: ${formData.message}
           {
             message:
               "Server configuration error: Quote recipient email not set.",
+          },
+          { status: 500 }
+        );
+      }
+
+      // Check if Resend has been initialized
+      if (!resend) {
+        console.error("Resend API key is missing. Cannot send email.");
+        return NextResponse.json(
+          {
+            message:
+              "Server configuration error: Email service not configured.",
           },
           { status: 500 }
         );
