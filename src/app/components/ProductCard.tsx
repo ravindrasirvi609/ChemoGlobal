@@ -23,7 +23,7 @@ export default function ProductCard({
       )}
 
       {/* Image Container */}
-      <div className="relative bg-gradient-to-br from-blue-50/30 to-blue-100/30 overflow-hidden h-56 flex items-center justify-center p-8">
+      <div className="relative bg-gradient-to-br from-blue-50/30 to-blue-100/30 overflow-hidden h-56 flex items-center justify-center p-4">
         <div className="absolute inset-0 bg-blue-500/5 backdrop-filter backdrop-blur-[1px] group-hover:backdrop-blur-[2px] transition-all duration-300"></div>
 
         <div className="relative z-10 w-full h-full flex items-center justify-center">
@@ -31,12 +31,21 @@ export default function ProductCard({
             src={product.image || defaultProductImage}
             alt={product.name}
             className="max-h-full max-w-full object-contain transform transition-transform duration-500 group-hover:scale-110"
-            width={150}
-            height={150}
+            width={200}
+            height={200}
+            priority={product.isNew}
           />
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        {/* Image overlay with product info */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+        {/* Purity badge */}
+        <div className="absolute top-3 left-3 z-20">
+          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-500/90 text-white shadow-sm">
+            {product.purity}
+          </span>
+        </div>
       </div>
 
       {/* Content Container */}

@@ -286,6 +286,7 @@ export default function Home() {
                 icon: "🧪",
                 link: "/products?category=Pharmaceutical%20Intermediates",
                 color: "from-blue-400/20 to-blue-500/20",
+                count: "9 Products",
               },
               {
                 title: "Specialty Chemicals",
@@ -294,6 +295,7 @@ export default function Home() {
                 icon: "⚗️",
                 link: "/products?category=Specialty%20Chemicals",
                 color: "from-purple-400/20 to-purple-500/20",
+                count: "15+ Products",
               },
               {
                 title: "Active Pharmaceutical Ingredients",
@@ -302,6 +304,7 @@ export default function Home() {
                 icon: "💊",
                 link: "/products?category=APIs",
                 color: "from-green-400/20 to-green-500/20",
+                count: "10+ Products",
               },
             ].map((category, index) => (
               <div
@@ -321,6 +324,14 @@ export default function Home() {
                     {category.title}
                   </h3>
                   <p className="text-gray-600 mb-6">{category.description}</p>
+
+                  {/* Product count */}
+                  <div className="mb-6">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700">
+                      {category.count}
+                    </span>
+                  </div>
+
                   <Link
                     href={category.link}
                     className="inline-flex items-center text-[#3E64FF] font-medium hover:text-[#536DFE] group-hover:translate-x-1 transition-all"
@@ -475,7 +486,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProducts.slice(0, 3).map((product) => (
+            {featuredProducts.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
@@ -490,6 +501,121 @@ export default function Home() {
               className="inline-flex items-center justify-center px-8 py-3 border-2 border-[#3E64FF] text-[#3E64FF] hover:bg-[#3E64FF]/5 rounded-full font-medium transition-colors"
             >
               View All Products
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 ml-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* New Products Showcase */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100/50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <div className="inline-flex items-center justify-center mb-4 bg-green-500/10 backdrop-filter backdrop-blur-sm rounded-full px-4 py-1 text-green-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 mr-2"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="font-medium">Recently Added</span>
+            </div>
+            <h2 className="text-3xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-green-600 to-emerald-600 text-transparent bg-clip-text">
+                New Products
+              </span>
+            </h2>
+            <p className="text-gray-600">
+              Discover our latest additions to the product catalog, featuring
+              cutting-edge chemical intermediates and specialty compounds
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                name: "Ethyl Acetimidate Hydrochloride",
+                category: "Pharmaceutical Intermediates",
+                image: "/images/products/ethyl-acetimidate-hydrochloride.png",
+                casNumber: "22007-91-6",
+                purity: "≥98%",
+              },
+              {
+                name: "4-Chloro-3-Nitro Benzoic Acid Methyl Ester",
+                category: "Pharmaceutical Intermediates",
+                image:
+                  "/images/products/4-chloro-3-nitro-benzoic-acid-methyl-ester.png",
+                casNumber: "14719-83-6",
+                purity: "≥98%",
+              },
+              {
+                name: "γ-Butyrolactone",
+                category: "Specialty Chemicals",
+                image: "/images/products/gamma-butyrolactone.png",
+                casNumber: "96-48-0",
+                purity: "≥99%",
+              },
+              {
+                name: "Tetrabenazine",
+                category: "APIs",
+                image: "/images/products/tetrabenazine.png",
+                casNumber: "58-46-8",
+                purity: "≥98%",
+              },
+            ].map((product, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
+              >
+                <div className="h-32 bg-gray-50 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    width={120}
+                    height={120}
+                    className="object-contain max-h-full max-w-full"
+                  />
+                </div>
+
+                <div className="text-center">
+                  <h3 className="font-semibold text-gray-800 mb-2 text-sm leading-tight">
+                    {product.name}
+                  </h3>
+                  <p className="text-xs text-gray-500 mb-2">
+                    {product.category}
+                  </p>
+                  <p className="text-xs text-gray-400 mb-3">
+                    {product.casNumber}
+                  </p>
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    {product.purity}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link
+              href="/products"
+              className="inline-flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-full font-medium hover:bg-green-700 transition-colors"
+            >
+              Explore All New Products
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 ml-2"
@@ -939,7 +1065,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProducts.slice(0, 3).map((product) => (
+            {featuredProducts.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
