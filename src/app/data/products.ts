@@ -47,7 +47,7 @@ export const featuredProducts: Product[] = [
       "Production of blood-thinner medications",
       "Base for other coumarin derivatives",
     ],
-    image: "/images/products/4-hydroxycoumarin.png",
+    image: "/images/products/4-hydroxy-coumarin-powder-500x500.webp",
     tags: ["Intermediate", "Anticoagulants"],
   },
   {
@@ -66,7 +66,7 @@ export const featuredProducts: Product[] = [
       "CNS drug candidate development",
       "Pharma-grade API production",
     ],
-    image: "/images/products/2-amino-5-chloropyridine.png",
+    image: "/images/products/2-amino-5-chloropyridine-500x500.webp",
     isNew: true,
     tags: ["API Intermediate", "Heterocyclic"],
   },
@@ -171,6 +171,25 @@ export const featuredProducts: Product[] = [
     applications: ["Organic synthesis", "Pharmaceutical intermediate"],
     image: "/images/chemical-placeholder.png",
     tags: ["Intermediate", "Adamantyl Derivative"],
+  },
+  {
+    id: "glimepiride-sulphonamide",
+    name: "Glimepiride Sulphonamide",
+    casNumber: "N/A",
+    category: "Pharmaceutical Intermediates",
+    description:
+      "Sulphonamide derivative of glimepiride for pharmaceutical research and development.",
+    purity: "≥98%",
+    molecularFormula: "C24H34N4O5S",
+    molecularWeight: "490.62 g/mol",
+    appearance: "White crystalline powder",
+    applications: [
+      "Pharmaceutical research",
+      "Drug development",
+      "Chemical synthesis",
+    ],
+    image: "/images/products/15-0-Glimepiride-Sulphonamide-Powder.jpg",
+    tags: ["Intermediate", "Sulphonamide", "Glimepiride"],
   },
 ];
 
@@ -280,7 +299,7 @@ export const PRODUCTS: Product[] = [
       "Stable form: non-hygroscopic crystalline solid, easy to handle and store",
       "Bulk supply: available through trusted chemical suppliers, ensuring uninterrupted production",
     ],
-    image: "/images/products/2-amino-5-chloropyridine.png",
+    image: "/images/products/2-amino-5-chloropyridine-500x500.webp",
     isNew: true,
     tags: ["Intermediate", "High Purity"],
   },
@@ -312,7 +331,7 @@ export const PRODUCTS: Product[] = [
       "Versatile scaffold: serves as a base for other coumarin derivatives and vitamin K analogs",
       "Benefits: Consistent performance in pharma applications; supplied in bulk to support large-scale production",
     ],
-    image: "/images/products/4-hydroxycoumarin.png",
+    image: "/images/products/4-hydroxy-coumarin-powder-500x500.webp",
     isNew: false,
     tags: ["Intermediate", "Anticoagulants"],
   },
@@ -417,6 +436,25 @@ export const PRODUCTS: Product[] = [
     ],
     image: "/images/products/phthalide.png",
     tags: ["Intermediate", "Lactone", "Building Block"],
+  },
+  {
+    id: "glimepiride-sulphonamide",
+    name: "Glimepiride Sulphonamide",
+    casNumber: "N/A",
+    category: "Pharmaceutical Intermediates",
+    description:
+      "Sulphonamide derivative of glimepiride for pharmaceutical research and development.",
+    purity: "≥98%",
+    molecularFormula: "C24H34N4O5S",
+    molecularWeight: "490.62 g/mol",
+    appearance: "White crystalline powder",
+    applications: [
+      "Pharmaceutical research",
+      "Drug development",
+      "Chemical synthesis",
+    ],
+    image: "/images/products/15-0-Glimepiride-Sulphonamide-Powder.jpg",
+    tags: ["Intermediate", "Sulphonamide", "Glimepiride"],
   },
 ];
 

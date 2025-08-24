@@ -3,14 +3,206 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 import {
   getProductByCasNumber,
   PRODUCTS,
   makeUrlSafe,
 } from "../../data/products";
 
+// Download Dialog Component
+function DownloadDialog({
+  isOpen,
+  onClose,
+  documentType,
+  onSubmit,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  documentType: string;
+  onSubmit: (formData: {
+    name: string;
+    email: string;
+    companyName: string;
+    contactNo: string;
+  }) => void;
+}) {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    companyName: "",
+    contactNo: "",
+  });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validation
+    const newErrors: { [key: string]: string } = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.email.trim()) newErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(formData.email))
+      newErrors.email = "Please enter a valid email";
+    if (!formData.companyName.trim())
+      newErrors.companyName = "Company name is required";
+    if (!formData.contactNo.trim())
+      newErrors.contactNo = "Contact number is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    onSubmit(formData);
+    setFormData({ name: "", email: "", companyName: "", contactNo: "" });
+    setErrors({});
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-gray-800">
+              Download {documentType}
+            </h3>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Full Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#3E64FF] focus:border-transparent ${
+                  errors.name ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="Enter your full name"
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#3E64FF] focus:border-transparent ${
+                  errors.email ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="Enter your email address"
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Company Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.companyName}
+                onChange={(e) =>
+                  setFormData({ ...formData, companyName: e.target.value })
+                }
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#3E64FF] focus:border-transparent ${
+                  errors.companyName ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="Enter your company name"
+              />
+              {errors.companyName && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.companyName}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Contact Number <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="tel"
+                value={formData.contactNo}
+                onChange={(e) =>
+                  setFormData({ ...formData, contactNo: e.target.value })
+                }
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#3E64FF] focus:border-transparent ${
+                  errors.contactNo ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="Enter your contact number"
+              />
+              {errors.contactNo && (
+                <p className="text-red-500 text-sm mt-1">{errors.contactNo}</p>
+              )}
+            </div>
+
+            <div className="flex space-x-3 pt-4">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="flex-1 px-4 py-2 bg-gradient-to-r from-[#3E64FF] to-[#536DFE] text-white rounded-lg hover:from-[#3E64FF] hover:to-[#3E64FF] transition-all duration-300"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ProductDetail() {
   const params = useParams();
+  const [downloadDialog, setDownloadDialog] = useState<{
+    isOpen: boolean;
+    documentType: string;
+  }>({ isOpen: false, documentType: "" });
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [submittedDocumentType, setSubmittedDocumentType] = useState("");
+
   // Debug params
   console.log("Params received:", params);
 
@@ -27,6 +219,31 @@ export default function ProductDetail() {
 
   const product = getProductByCasNumber(casNumber);
   console.log("Product found:", product ? "Yes" : "No");
+
+  const handleDownloadClick = (documentType: string) => {
+    setDownloadDialog({ isOpen: true, documentType });
+  };
+
+  const handleFormSubmit = (formData: {
+    name: string;
+    email: string;
+    companyName: string;
+    contactNo: string;
+  }) => {
+    console.log("Form submitted:", formData);
+    setSubmittedDocumentType(downloadDialog.documentType);
+    setDownloadDialog({ isOpen: false, documentType: "" });
+    setShowSuccessMessage(true);
+
+    // Hide success message after 5 seconds
+    setTimeout(() => {
+      setShowSuccessMessage(false);
+    }, 5000);
+  };
+
+  const closeDownloadDialog = () => {
+    setDownloadDialog({ isOpen: false, documentType: "" });
+  };
 
   if (!product) {
     return (
@@ -355,7 +572,7 @@ export default function ProductDetail() {
                     className="flex items-center justify-between p-3 border border-gray-100 rounded-lg hover:bg-gray-50/70 transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
-                      alert("Certificate of Analysis would be downloaded here");
+                      handleDownloadClick("Certificate of Analysis");
                     }}
                   >
                     <div className="flex items-center">
@@ -399,7 +616,7 @@ export default function ProductDetail() {
                     className="flex items-center justify-between p-3 border border-gray-100 rounded-lg hover:bg-gray-50/70 transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
-                      alert("Safety Data Sheet would be downloaded here");
+                      handleDownloadClick("Safety Data Sheet");
                     }}
                   >
                     <div className="flex items-center">
@@ -443,7 +660,7 @@ export default function ProductDetail() {
                     className="flex items-center justify-between p-3 border border-gray-100 rounded-lg hover:bg-gray-50/70 transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
-                      alert("Product Brochure would be downloaded here");
+                      handleDownloadClick("Product Brochure");
                     }}
                   >
                     <div className="flex items-center">
@@ -817,6 +1034,43 @@ export default function ProductDetail() {
           </div>
         </section>
       </main>
+      {downloadDialog.isOpen && (
+        <DownloadDialog
+          isOpen={downloadDialog.isOpen}
+          onClose={closeDownloadDialog}
+          documentType={downloadDialog.documentType}
+          onSubmit={handleFormSubmit}
+        />
+      )}
+      {showSuccessMessage && (
+        <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-40 max-w-sm">
+          <div className="flex items-start">
+            <div className="flex-shrink-0">
+              <svg
+                className="h-5 w-5 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium">
+                Request Submitted Successfully!
+              </p>
+              <p className="text-xs text-green-100 mt-1">
+                The {submittedDocumentType} will be sent to your email shortly.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
