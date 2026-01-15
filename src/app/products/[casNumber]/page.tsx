@@ -102,9 +102,8 @@ function DownloadDialog({
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#3E64FF] focus:border-transparent ${
-                  errors.name ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#3E64FF] focus:border-transparent ${errors.name ? "border-red-500" : "border-gray-300"
+                  }`}
                 placeholder="Enter your full name"
               />
               {errors.name && (
@@ -122,9 +121,8 @@ function DownloadDialog({
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#3E64FF] focus:border-transparent ${
-                  errors.email ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#3E64FF] focus:border-transparent ${errors.email ? "border-red-500" : "border-gray-300"
+                  }`}
                 placeholder="Enter your email address"
               />
               {errors.email && (
@@ -142,9 +140,8 @@ function DownloadDialog({
                 onChange={(e) =>
                   setFormData({ ...formData, companyName: e.target.value })
                 }
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#3E64FF] focus:border-transparent ${
-                  errors.companyName ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#3E64FF] focus:border-transparent ${errors.companyName ? "border-red-500" : "border-gray-300"
+                  }`}
                 placeholder="Enter your company name"
               />
               {errors.companyName && (
@@ -164,9 +161,8 @@ function DownloadDialog({
                 onChange={(e) =>
                   setFormData({ ...formData, contactNo: e.target.value })
                 }
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#3E64FF] focus:border-transparent ${
-                  errors.contactNo ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#3E64FF] focus:border-transparent ${errors.contactNo ? "border-red-500" : "border-gray-300"
+                  }`}
                 placeholder="Enter your contact number"
               />
               {errors.contactNo && (
@@ -774,7 +770,7 @@ export default function ProductDetail() {
                 </p>
                 <div className="space-y-3">
                   <a
-                    href="mailto:info@chemoglobal.com"
+                    href="mailto:admin@operantworld.com"
                     className="flex items-center text-[#3E64FF] hover:text-[#536DFE] transition-colors group"
                   >
                     <div className="bg-[#3E64FF]/10 p-2 rounded-full mr-3 text-[#3E64FF] group-hover:bg-[#3E64FF]/20 transition-colors">
@@ -796,7 +792,7 @@ export default function ProductDetail() {
                     <span className="font-medium">Email Technical Support</span>
                   </a>
                   <a
-                    href="tel:+15551234567"
+                    href="tel:+918107199052"
                     className="flex items-center text-[#3E64FF] hover:text-[#536DFE] transition-colors group"
                   >
                     <div className="bg-[#3E64FF]/10 p-2 rounded-full mr-3 text-[#3E64FF] group-hover:bg-[#3E64FF]/20 transition-colors">
@@ -818,7 +814,7 @@ export default function ProductDetail() {
                     <span className="font-medium">Call Sales Team</span>
                   </a>
                   <a
-                    href="https://wa.me/15551234567"
+                    href="https://wa.me/918107199052"
                     className="flex items-center text-[#3E64FF] hover:text-[#536DFE] transition-colors group"
                   >
                     <div className="bg-[#3E64FF]/10 p-2 rounded-full mr-3 text-[#3E64FF] group-hover:bg-[#3E64FF]/20 transition-colors">

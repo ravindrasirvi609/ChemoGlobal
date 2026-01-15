@@ -142,9 +142,8 @@ const Footer = () => {
                   </svg>
                 </div>
                 <div>
-                  <p>123 Chemical Lane</p>
-                  <p>Cambridge, MA 02142</p>
-                  <p>United States</p>
+                  <p>17, mayank Nagar naya gaon road</p>
+                  <p>pali rajasthan 306401, india</p>
                 </div>
               </div>
 
@@ -166,10 +165,10 @@ const Footer = () => {
                   </svg>
                 </div>
                 <a
-                  href="mailto:info@chemoglobal.com"
+                  href="mailto:admin@operantworld.com"
                   className="hover:text-[#3E64FF] transition-colors"
                 >
-                  info@chemoglobal.com
+                  admin@operantworld.com
                 </a>
               </div>
 
@@ -191,10 +190,10 @@ const Footer = () => {
                   </svg>
                 </div>
                 <a
-                  href="tel:+1-555-123-4567"
+                  href="tel:+918107199052"
                   className="hover:text-[#3E64FF] transition-colors"
                 >
-                  +1 (555) 123-4567
+                  +91 8107199052
                 </a>
               </div>
             </address>

@@ -402,9 +402,9 @@ export default function Contact() {
                     <address className="not-italic text-gray-600 ml-12">
                       ChemoGlobal, Inc.
                       <br />
-                      100 Chemistry Avenue
+                      17, mayank Nagar naya gaon road
                       <br />
-                      Boston, MA 02115, USA
+                      pali rajasthan 306401, india
                     </address>
                   </div>
 
@@ -432,10 +432,10 @@ export default function Contact() {
                     </div>
                     <div className="ml-12">
                       <p className="text-gray-600">
-                        Sales & Support: +1 (555) 123-4567
+                        Sales & Support: +91 8107199052
                       </p>
                       <p className="text-gray-600">
-                        Technical Support: +1 (555) 765-4321
+                        Technical Support: +91 8107199052
                       </p>
                     </div>
                   </div>
@@ -464,13 +464,13 @@ export default function Contact() {
                     </div>
                     <div className="ml-12">
                       <p className="text-gray-600">
-                        General Inquiries: info@chemoglobal.com
+                        General Inquiries: admin@operantworld.com
                       </p>
                       <p className="text-gray-600">
-                        Sales: sales@chemoglobal.com
+                        Sales: admin@operantworld.com
                       </p>
                       <p className="text-gray-600">
-                        Support: support@chemoglobal.com
+                        Support: admin@operantworld.com
                       </p>
                     </div>
                   </div>
